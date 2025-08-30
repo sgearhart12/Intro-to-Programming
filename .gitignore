@@ -1,0 +1,22 @@
+# Windows system files
+Thumbs.db
+Desktop.ini
+
+# Mac system files
+.DS_Store
+
+# Node / Python / temp files
+node_modules/
+*.log
+__pycache__/
+*.pyc
+
+# VS Code workspace/settings
+.vscode/
+
+# Any temporary files
+*.tmp
+*.swp
+
+# OneDrive / cloud temp files
+~$*
