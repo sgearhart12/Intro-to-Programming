@@ -30,7 +30,7 @@ wrong_add_function(arg1, arg2)
 #I don't understand what I need to output into a single variable.
 
 print("Problem 1b")
-#Assuming that the goal of the function is to sum list b and add this number to each value in list a
+#Assuming that the goal of the function is to add each index item in list b to each index item in list a.
 arg1 = [1,2,3]
 arg2 = [1,1,1]
 def correct_add_function(arg1, arg2):
@@ -44,3 +44,30 @@ def correct_add_function(arg1, arg2):
    return arg1
 correct_add_function(arg1, arg2)
 print(arg1)
+
+print("Problem 2a")
+#numeric section
+   if sum([type(i)==int for i in arg1])==len(arg1) and \
+      sum([type(i)==int for i in arg2])==len(arg2):
+         arg1_index=0
+         while arg1_index < len(arg1):
+            arg_2_sum = 0
+            for arg2_elements in arg2:
+               arg_2_sum = sum([arg1[arg1_index]+i for i in arg2])
+            arg1[arg1_index]=arg_2_sum  
+            arg1_index+=1
+         return arg1
+   #string section
+   elif sum([type(i)==str for i in arg1])==len(arg1) and \
+      sum([type(i)==str for i in arg2])==len(arg2):
+         arg1_index=0
+         while arg1_index < len(arg1):
+            arg_2_sum = ''
+            for arg2_elements in arg2:
+               arg_2_sum += arg2_elements
+            arg1[arg1_index]=arg1[arg1_index]+str(arg_2_sum)
+            arg1_index+=1
+         return arg1
+arg_str_1=['1','2','3']
+arg_str_2=['1','1', 1]
+wrong_add_function(arg_str_1,arg_str_2)
