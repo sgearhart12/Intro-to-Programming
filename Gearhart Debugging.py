@@ -24,10 +24,6 @@ def wrong_add_function(arg1,arg2):
    print(f"Final value arg1={arg1} and final value arg2={arg2}")
    return arg1
 wrong_add_function(arg1, arg2)
-#Questions
-#How do we use print to better point out the exact issue with the code rather than just returning the values in different locations?
-#Unclear based on the description of what the function is supposed to do whether we are supposed to add each index element together or sum list b and add this value to each vlaue in list a.
-#I don't understand what I need to output into a single variable.
 
 print("Problem 1b")
 #Assuming that the goal of the function is to add each index item in list b to each index item in list a.
@@ -49,10 +45,11 @@ print(arg1)
 print("Problem 2a")
 print("Problem 2b")
 arg_str_1=["1","2","3"]
-arg_str_2=['1', 1, 1]
+arg_str_2=["1","2","3"]
 def exception_add_function(arg_str_1, arg_str_2):
    arg1_index=0
 #numeric section
+#the following if statement will not run if arg1 or arg2 contain non-integers
    if sum([type(i)==int for i in arg_str_1])==len(arg_str_1) and \
       sum([type(i)==int for i in arg_str_2])==len(arg_str_2):
       print("Enters numeric section")
@@ -60,27 +57,55 @@ def exception_add_function(arg_str_1, arg_str_2):
          arg_str_1[arg1_index]=arg_str_2[arg1_index]+arg_str_1[arg1_index]
          arg1_index+=1
       return arg_str_1
-   #string section
+#string section
+#the following if statement will not run if arg1 or arg2 contain non-strings
    if sum([type(i)==str for i in arg_str_1])==len(arg_str_1) and \
       sum([type(i)==str for i in arg_str_2])==len(arg_str_2):
       arg1_index=0
       while arg1_index < len(arg_str_1):
-         try:
-            arg_2_sum = ''
-            for arg2_elements in arg_str_2:
-               try:
-                  arg_2_sum += arg2_elements
-               except (TypeError, ValueError, IndexError):
-                  print("Issue with adding strings together")
-            try:
-               arg_str_1[arg1_index]=arg_str_1[arg1_index]+str(arg_2_sum)
-            except (TypeError, ValueError, IndexError):
-               print("Issue adding string from arg 2 to other type")
-         except (TypeError, ValueError, IndexError):
-            print("Issue inside while loop")
+         arg_2_sum = ''
+         for arg2_elements in arg_str_2:
+            arg_2_sum += arg2_elements
+            arg_str_1[arg1_index]=arg_str_1[arg1_index]+str(arg_2_sum)
          arg1_index+=1
       return arg_str_1
+   #added an else statement since the two ifs are being skipped when we have mixed lists as arguments
    else:
       print("Neither numeric or string section entered")
+      try:
+         sum(arg_str_1)
+      except(TypeError, ValueError, IndexError):
+         print("Your input argument has a type mismatch")
+         for i in range(len(arg_str_1)):
+            if type(arg_str_1[i])==str:
+               print(f'Your input for arg1 is a string at position {i}, please change to all strings or all integers to proceed')
+      try:
+         sum(arg_str_2)
+      except(TypeError, ValueError, IndexError):
+         print("Your input argument has a type mismatch")
+         for i in range(len(arg_str_2)):
+            if type(arg_str_2[i])==str:
+               print(f'Your input for arg2 is a string at position {i}, please change to all strings or all integers to proceed')
 exception_add_function(arg_str_1, arg_str_2)
 print(arg_str_1)
+print(arg_str_2)
+
+print("Problem 2c")
+def correction_add_function(arg_str_1, arg_str_2):
+    #create a numeric code to do nothing since this part of the previous function worked fine
+   if sum([type(i)==int for i in arg_str_1])==len(arg_str_1) and \
+      sum([type(i)==int for i in arg_str_2])==len(arg_str_2):
+      return arg_str_1, arg_str_2
+   #correct the string portion of the code to behave as expected
+   if sum([type(i)==str for i in arg_str_1])==len(arg_str_1) and \
+   sum([type(i)==str for i in arg_str_2])==len(arg_str_2):
+      #create a new variable to hold our corrected list
+      newoutput=[]
+      for i in range(len(arg_str_1)):
+      #the following code will take the first slice of the object at each list index in arg1 and add the whole of arg2 to it
+         newoutput.append((str(arg_str_1[i])[0])+"".join(arg_str_2))
+      return newoutput
+   print(newoutput)
+problem2solution=correction_add_function(arg_str_1, arg_str_2)
+print(problem2solution)
+
