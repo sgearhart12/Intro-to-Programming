@@ -37,6 +37,7 @@ def correct_add_function(arg1, arg2):
    arg1_index=0
    while arg1_index < len(arg1):
       print("Value og arg1=", arg1, "and value of arg2=", arg2)
+      #add corrected syntax here so that each element is added together.
       arg1[arg1_index]=arg2[arg1_index]+arg1[arg1_index]  
       print("Value of arg1 in the loop:", arg1)
       print("Value of arg2 in the loop:", arg2)
@@ -46,28 +47,40 @@ correct_add_function(arg1, arg2)
 print(arg1)
 
 print("Problem 2a")
+print("Problem 2b")
+arg_str_1=["1","2","3"]
+arg_str_2=['1', 1, 1]
+def exception_add_function(arg_str_1, arg_str_2):
+   arg1_index=0
 #numeric section
-   if sum([type(i)==int for i in arg1])==len(arg1) and \
-      sum([type(i)==int for i in arg2])==len(arg2):
-         arg1_index=0
-         while arg1_index < len(arg1):
-            arg_2_sum = 0
-            for arg2_elements in arg2:
-               arg_2_sum = sum([arg1[arg1_index]+i for i in arg2])
-            arg1[arg1_index]=arg_2_sum  
-            arg1_index+=1
-         return arg1
+   if sum([type(i)==int for i in arg_str_1])==len(arg_str_1) and \
+      sum([type(i)==int for i in arg_str_2])==len(arg_str_2):
+      print("Enters numeric section")
+      while arg1_index < len(arg_str_1):
+         arg_str_1[arg1_index]=arg_str_2[arg1_index]+arg_str_1[arg1_index]
+         arg1_index+=1
+      return arg_str_1
    #string section
-   elif sum([type(i)==str for i in arg1])==len(arg1) and \
-      sum([type(i)==str for i in arg2])==len(arg2):
-         arg1_index=0
-         while arg1_index < len(arg1):
+   if sum([type(i)==str for i in arg_str_1])==len(arg_str_1) and \
+      sum([type(i)==str for i in arg_str_2])==len(arg_str_2):
+      arg1_index=0
+      while arg1_index < len(arg_str_1):
+         try:
             arg_2_sum = ''
-            for arg2_elements in arg2:
-               arg_2_sum += arg2_elements
-            arg1[arg1_index]=arg1[arg1_index]+str(arg_2_sum)
-            arg1_index+=1
-         return arg1
-arg_str_1=['1','2','3']
-arg_str_2=['1','1', 1]
-wrong_add_function(arg_str_1,arg_str_2)
+            for arg2_elements in arg_str_2:
+               try:
+                  arg_2_sum += arg2_elements
+               except (TypeError, ValueError, IndexError):
+                  print("Issue with adding strings together")
+            try:
+               arg_str_1[arg1_index]=arg_str_1[arg1_index]+str(arg_2_sum)
+            except (TypeError, ValueError, IndexError):
+               print("Issue adding string from arg 2 to other type")
+         except (TypeError, ValueError, IndexError):
+            print("Issue inside while loop")
+         arg1_index+=1
+      return arg_str_1
+   else:
+      print("Neither numeric or string section entered")
+exception_add_function(arg_str_1, arg_str_2)
+print(arg_str_1)
