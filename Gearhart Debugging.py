@@ -154,7 +154,7 @@ exception_add_function(arg_str_1, arg_str_2)
 problem2b2=exception_add_function(arg_str_1, arg_str_2)
 print(problem2b2)
 
-arg_str_1=["1","2","3"]
+arg_str_1=["1",2,"3"]
 arg_str_2=["1","2","3"]
 print("Problem 2c")
 def correction_add_function(arg_str_1, arg_str_2):
@@ -162,7 +162,7 @@ def correction_add_function(arg_str_1, arg_str_2):
       #first line will pass if list types are all int, otherwise will skip
       if sum([type(i)==int for i in arg_str_1])==len(arg_str_1) and \
       sum([type(i)==int for i in arg_str_2])==len(arg_str_2):
-         return wrong_add_function
+         return wrong_add_function(arg_str_1, arg_str_2)
       #first line will pass if list types are all str, otherwise will skip
       if sum([type(i)==str for i in arg_str_1])==len(arg_str_1) and \
       sum([type(i)==str for i in arg_str_2])==len(arg_str_2):
@@ -171,25 +171,14 @@ def correction_add_function(arg_str_1, arg_str_2):
          for i in range(len(arg_str_1)):
          #the following code will take the first slice of the object at each list index in arg1 and add the whole of arg2 to it
             newoutput.append((str(arg_str_1[i])[0])+"".join(arg_str_2))
-            return newoutput
+         return newoutput
       else: 
       #if the if and elif were skipped, we know there is a type mismatch in the list. Intentionally create an error
          sum(arg_str_1) and sum(arg_str_2)
    except(TypeError, ValueError, IndexError):
       print("Your input argument has a type mismatch")
-      for i in range(len(arg_str_1)):
-         if type(arg_str_1[i])==int:
-            print(f'Your input for arg1 is an integer at position {i}, please change to all strings or all integers to proceed')
-      for i in range(len(arg_str_2)):
-         if type(arg_str_2[i])==int:
-            print(f'Your input for arg2 is an integer at position {i}, please change to all strings or all integers to proceed') 
-      for i in range(len(arg_str_1)):
-         if type(arg_str_1[i])==str:
-            print(f'Your input for arg1 is a string at position {i}, please change to all strings or all integers to proceed') 
-      for i in range(len(arg_str_2)):
-         if type(arg_str_2[i])==str:
-            print(f'Your input for arg2 is a string at position {i}, please change to all strings or all integers to proceed') 
-   
+      #convert the whole list to string and rerun so it does not error
+      return correction_add_function([str(i) for i in arg_str_1], [str(i) for i in arg_str_2])
 problem2solution=correction_add_function(arg_str_1, arg_str_2)
 print(problem2solution)
 
