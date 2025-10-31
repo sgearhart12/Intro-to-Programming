@@ -51,73 +51,46 @@ print(q_4)
 
 #Question 5 - which date has the largest average departure delay?
 print("Question 5")
-#calculate departure delay for each combination of month, day.
-def dep_date(month):
-    monthdata=flights_data[flights_data['month']==month]
-    largest_delay=monthdata.sort_values(by='dep_delay', ascending=False).iloc[0]
-    return (largest_delay['day'], largest_delay['dep_delay'])
-#this will return the date associated with the largest departure delay in the month
-
-#now print the value for each month
-january=(dep_date(1))
-print("January")
-print(january)
-february=(dep_date(2))
-print("February")
-print(february)
-march=(dep_date(3))
-print("March")
-print(march)
-april=(dep_date(4))
-print("April")
-print(april)
-may=(dep_date(5))
-print("May")
-print(may)
-june=(dep_date(6))
-print("June")
-print(june)
-july=(dep_date(7))
-print("July")
-print(july)
-august=(dep_date(8))
-print("August")
-print(august)
-september=(dep_date(9))
-print("September")
-print(september)
-october=(dep_date(10))
-print("October")
-print(october)
-november=(dep_date(11))
-print("November")
-print(november)
-december=(dep_date(12))
-print("December")
-print(december)
-
-#now let's put these tuples into a new array to work with
-monthtuples=[january, february, march, april, may, june, july, august, september, october, november, december]
-month_names=['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-newarray=pd.DataFrame(monthtuples, columns=['day', 'delay'])
-newarray['month']=month_names
-
-#finally, let's return the highest delay value from all of them
-final_delay=newarray.sort_values(by='delay', ascending=False).iloc[0]
-print(final_delay)
-
-#now we need to put the solution in the right format since we can see the right day is January 9
-month=1
-year=2013
-day=9
-
-q_5=f'{year}/{month}/{day}'
+#create a column to hold the date format which will be used in the next question as well
+flights_data['datecombined']=flights_data['year'].astype(str) + '/' + flights_data['month'].astype(str) + '/' +flights_data['day'].astype(str)
+longest_departure_delay=flights_data.sort_values(by='dep_delay', ascending=False).iloc[0]
+q_5=longest_departure_delay['datecombined']
 print(q_5)
 
-#For next question try using pd slice and then applying to previous question...
+print("Question 6")
+longest_arrival_delay=flights_data.sort_values(by='arr_delay', ascending=False).iloc[0]
+q_6=longest_arrival_delay['datecombined']
+print(q_6)
 
+print("Question 7")
+#we will need to create a variable for speed
+flights_data['speed']=(flights_data['distance'])/(flights_data['air_time'])
+fastest_flight=flights_data[(['origin']=='JFK') or (flights_data['origin']=='LGA')].sort_values(by='speed', ascending=False).iloc[0]
+print(fastest_flight['tailnum'])
 
-            
+print("Question 8")
+print(weather_data_np.dtype)
+#set nan values to 0 in the pandas dataframe
+containsnumeric=weather_data_pd.select_dtypes(include=np.number).columns
+weather_data_pd[containsnumeric]=weather_data_pd[containsnumeric].fillna(0)
+#check work
+nans=weather_data_pd[containsnumeric].isna().any().any()
+print(nans)
+#no nans remain
+
+print("Question 9")
+q_9=np.sum(weather_data_np[:,3]==2)
+print(q_9)
+
+print("Question 10")
+#ignoring nan in calculation
+q_10=np.nanmean(weather_data_np[:,8])
+print(q_10)
+
+print("Question 11")
+q_11=np.nanstd(weather_data_np[:,8])
+print(q_11)
+
 
 
 
