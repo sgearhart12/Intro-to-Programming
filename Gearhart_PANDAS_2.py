@@ -35,7 +35,25 @@ q_4=np.round(df, 4)
 print(q_4)
 
 #Question 5
+print("Question 5")
+df = pd.DataFrame(np.random.randint(1,100, 40).reshape(10, -1), columns=list('pqrs'), index=list('abcdefghij'))
+print(df)
+#first, let's import scipy
+from scipy.spatial.distance import pdist, squareform, euclidean
+ #calculate all distances for column a and find the smallest one
+ #create an array for this process for each row
+ #start here, this output doesn't look right yet. Then repeat for each letter, add the lowest value to a new column in the original df. 
+array_a=[]
+array_a={(euclidean(df.loc['a'], df.loc['b'])), 'b', 
+         (euclidean(df.loc['a'], df.loc['c'])), 'c',
+         (euclidean(df.loc['a'], df.loc['d'])), 'd',
+         (euclidean(df.loc['a'], df.loc['e'])), 'e',
+         (euclidean(df.loc['a'], df.loc['f'])), 'f',
+         (euclidean(df.loc['a'], df.loc['g'])), 'g', 
+         (euclidean(df.loc['a'], df.loc['h'])), 'h',
+         (euclidean(df.loc['a'], df.loc['i'])), 'i',
+         (euclidean(df.loc['a'], df.loc['j'])), 'j'}
+print(array_a)
+#now combine to a list to find the smallest
 
-
-
-
+#now which column is that?
