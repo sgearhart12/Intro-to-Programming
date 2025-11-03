@@ -36,24 +36,47 @@ print(q_4)
 
 #Question 5
 print("Question 5")
-df = pd.DataFrame(np.random.randint(1,100, 40).reshape(10, -1), columns=list('pqrs'), index=list('abcdefghij'))
-print(df)
-#first, let's import scipy
-from scipy.spatial.distance import pdist, squareform, euclidean
- #calculate all distances for column a and find the smallest one
- #create an array for this process for each row
- #start here, this output doesn't look right yet. Then repeat for each letter, add the lowest value to a new column in the original df. 
-array_a=[]
-array_a={(euclidean(df.loc['a'], df.loc['b'])), 'b', 
-         (euclidean(df.loc['a'], df.loc['c'])), 'c',
-         (euclidean(df.loc['a'], df.loc['d'])), 'd',
-         (euclidean(df.loc['a'], df.loc['e'])), 'e',
-         (euclidean(df.loc['a'], df.loc['f'])), 'f',
-         (euclidean(df.loc['a'], df.loc['g'])), 'g', 
-         (euclidean(df.loc['a'], df.loc['h'])), 'h',
-         (euclidean(df.loc['a'], df.loc['i'])), 'i',
-         (euclidean(df.loc['a'], df.loc['j'])), 'j'}
-print(array_a)
-#now combine to a list to find the smallest
+#import euclidean
+from scipy.spatial.distance import euclidean
+df = pd.DataFrame(np.random.randint(1, 100, 40).reshape(10, -1),
+                  columns=list('pqrs'),
+                  index=list('abcdefghij'))
+#review what the dataframe looks like
+#print(df)
+#create empty columns
+df['closestidx'] = None
+df['closestdist'] = None
 
-#now which column is that?
+#select only numeric columns
+numeric_cols = df.select_dtypes(include=[np.number]).columns
+
+# calculate euclidean distance between a row of interest and all other rows
+#for each index in the dataframe
+for idx in df.index:
+    #create an empty dictionary
+    distances={}
+#for each other row besides the row of interest
+    for x in df.index:
+#if not the row of interest
+        if idx !=x:
+#calculate the distance between the row of interest and another row, store in new variable, using only numeric values
+            distances[x]=euclidean(df.loc[idx, numeric_cols].to_numpy(), df.loc[x, numeric_cols].to_numpy())
+#find the closest distance and assign this distance and it's index to the row for the new columns
+    closest_idx = min(distances, key=distances.get)
+    df.loc[idx, 'closestidx'] = closest_idx
+    df.loc[idx, 'closestdist'] = distances[closest_idx]
+
+print(df[['closestidx', 'closestdist']])
+
+#Question 6
+#create a correlation matrix is my interpretation of the problem since there was no question
+print("Question 6")
+data = {'A': [45, 37, 0, 42, 50],
+        'B': [38, 31, 1, 26, 90],
+        'C': [10, 15, -10, 17, 100],
+        'D': [60, 99, 15, 23, 56],
+        'E': [76, 98, -0.03, 78, 90]
+        }
+df=pd.DataFrame(data)
+matrix=df.corr()
+print(matrix)
